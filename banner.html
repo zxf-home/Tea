@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .dber {
+        width: 100%;
+        margin-top: 0;
+        padding-top: 150px;
+
+    }
+
+    .waper {
+        height: 200px;
+        width: 100%;
+        background-color: green;
+    }
+
+    .imgBoder {
+        height: 400px;
+        width: 718px;
+        background-color: navajowhite;
+        margin: 0 auto;
+        position: relative;
+        top: -150px;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .img_item {
+        list-style: none;
+        position: absolute;
+        cursor:pointer;
+        display: none;
+    }
+    .img_item.active{
+        display: block;
+        z-index: 10;
+    }
+    img {
+        width: 718px;
+        height: 400px;
+    }
+    .dotBoder{
+        list-style: none;
+        position: absolute;
+        top: 337px;
+        right: 460px;
+        z-index: 20;
+    }
+    .dot_item{
+        float: left;
+        background-color: gray;
+        border: 1px solid #240945;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        margin-left: 18px;
+        cursor: pointer;
+    }
+    .dot_item.active{
+        background-color: white;
+    }
+</style>
+<body>
+<div class="dber">
+    <div class="waper">
+        <ul class="imgBoder">
+            <li class="img_item active"><img src="./img/13ec6cf2546e254a3b4c9a2ba45fa2eb.jpeg" alt=""></li>
+            <li class="img_item"><img src="./img/a9cee5bb119e1af20727f2d6ccdb690d.jpg" alt=""></li>
+            <li class="img_item"><img src="./img/ef7dbeffcbe86970f9b7d1aab182ccce.jpeg" alt=""></li>
+            <li class="img_item"><img src="./img/05be00714e96be30f7853047f580f585.jpg" alt=""></li>
+            <li class="img_item"><img src="./img/小离.jpg" alt=""></li>
+        </ul>
+        <ul class="dotBoder">
+            <li class="dot_item active"></li>
+            <li class="dot_item"></li>
+            <li class="dot_item"></li>
+            <li class="dot_item"></li>
+            <li class="dot_item"></li>
+        </ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+        var imgList = document.getElementsByClassName('img_item');
+        var dotList = document.getElementsByClassName('dot_item');
+        var index = 0;
+        var imgRightMove = function () {
+            if (index > imgList.length -1 ){
+                index = 0;
+            }
+            for (let i=0; i<imgList.length;i++){
+                imgList[i].className = 'img_item';
+                dotList[i].className = 'dot_item';
+            }
+            imgList[index].className = 'img_item active';
+            dotList[index].className = 'dot_item active';
+            index++;
+        }
+        var dotClick = function() {
+            for (let i=0; i<dotList.length;i++){
+               dotList[i].addEventListener('click',function () {
+                   index = i;
+                   imgRightMove();
+               })
+            }
+        }
+        var mouseHove = function() {
+            for (let i=0; i<imgList.length;i++){
+                imgList[i].onmouseenter = function () {
+                    clearInterval(time);
+                }
+
+            }
+        }
+        var dotMouseHove = function() {
+            for (let i=0; i<dotList.length;i++){
+                dotList[i].onmouseenter = function () {
+                    clearInterval(time);
+                }
+
+            }
+        }
+        var mouseLeave = function() {
+            for (let i=0; i<imgList.length;i++){
+                imgList[i].onmouseleave = function () {
+                    // console.log('1111');
+                    time = setInterval(function () {
+                        imgRightMove();
+                    },2000);
+                }
+
+            }
+        }
+        var time = setInterval(function () {
+            imgRightMove();
+        },1000);
+        mouseHove();
+        dotClick();
+        dotMouseHove();
+        mouseLeave();
+</script>
+</html>
